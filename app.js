@@ -12,7 +12,7 @@ var usersRouter = require("./routes/users");
 var app = express();
 const connectMongodb = process.env.NODE_ENV == "development"
   ? "mongodb://localhost:27017/alimentos"
-  : "mongodb+srv://Willian:willian144@cluster0.ftthx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+  : "mongodb+srv://Willian:willian144@cluster0.ftthx.mongodb.net/alimentos?retryWrites=true&w=majority";
 mongoose.connect(connectMongodb, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
