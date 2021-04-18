@@ -17,7 +17,17 @@ var storage = multer.diskStorage({
     cb(null, Date.now() + "." + ext); //Appending .jpg
   },
 });
+var storageSubCats = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/sub-categories/");
+  },
+  filename: function (req, file, cb) {
+    const ext = file.originalname.split(".")[1];
+    cb(null, Date.now() + "." + ext); //Appending .jpg
+  },
+});
 const upload = multer({ storage: storage });
+const uploadSubCategories = multer({ storage: storageSubCats });
 /* GET home page. */
 
 router.get("/", function (req, res, next) {
@@ -63,5 +73,11 @@ router.get(
   "/api/get-all-sub-category/:categoryId",
   authMiddleware.authenticateToken,
   categoryController.getAllSubCategories,
+);
+router.post(
+  "/api/sub-category-add",
+  authMiddleware.authenticateToken,
+  uploadSubCategories.single("files"),
+  categoryController.createSubCategory,
 );
 module.exports = router;

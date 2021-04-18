@@ -10,6 +10,7 @@ const categorySchema = new mongoose.Schema({
   description: {
     type: String,
   },
+  sub_categories: Array,
 }, {
   collection: "categories",
   versionKey: false,

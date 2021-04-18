@@ -1,5 +1,6 @@
 const Category = require("../models/category.model");
-
+const mongoose = require("mongoose");
+const id = mongoose.Types.ObjectId();
 exports.create = async (req, res, next) => {
   const createCategory = await Category.create({
     name: req.body.name,
@@ -36,6 +37,26 @@ exports.getAllSubCategories = async (req, res, next) => {
     res.status(200).send({
       category_object: categoryObject,
       all_sub_categories: allSubCategory,
+    });
+  }
+};
+
+exports.createSubCategory = async (req, res, next) => {
+  const objectSubCats = {
+    _id: mongoose.Types.ObjectId(),
+    name: req.body.name,
+    description: req.body.description,
+    imagen: "./sub-categories/" + req.file.filename,
+  };
+  const createSubCategory = await Category.findByIdAndUpdate(
+    req.body.category_id,
+    {
+      $push: { sub_categories: objectSubCats },
+    },
+  );
+  if (typeof objectSubCats == "object") {
+    res.status(200).send({
+      message: "Se ha creado correctamente la sub categoria.",
     });
   }
 };
